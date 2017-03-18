@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik');
 
+$base-color: #ecebe8;
+$shadow-color: darken($base-color, 70%);
+
 html, body {
     margin: 0;
     box-sizing: border-box;
     height: 100vh;
     width: 100vw;
     font-family: Rubik, sans-serif;
-    display: flex;
     overflow-y: hidden;
 }
 
@@ -15,19 +17,55 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .horizontal-scroll-wrapper {
-    background-color: teal;
-    width: 100vh;
+    background-color: $base-color;
+    width: 103vh;
     height: 100vw;
+    margin-top: -18px;
 
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
 
-    transform: rotate(-90deg) translateY(-100vh);
+    transform: rotate(-90deg) translateY(-103vh);
     transform-origin: right top;
 
+    .info {
+        display: block;
+        opacity: 0;
+        transition: all .2s ease-in-out;
+
+        &.active {
+            opacity: 1;
+        }
+    }
+
+
+    h3, h6 {
+        display: inline-block;
+        background-color: $shadow-color;
+        color: #fff;
+        padding: 2px 6px 2px;
+        text-transform: uppercase;
+        letter-spacing: .13em;
+    }
+
+    h3 {
+        margin-top: 50px;
+        border-radius: 2px;
+        font-size: 1.2em;
+    }
+
+    img {
+        width: 300px;
+        transition: all .5s ease-out;
+        box-shadow: 0px 4px 11px 0px rgba($shadow-color, 0.5);
+
+        &:hover {
+            transform: scale(1.2);
+            box-shadow: 0px 18px 59px 1px rgba($shadow-color, 0.4);
+        }
+    }
 
     & > div {
-        background-color: chartreuse;
         height: 300px;
         width: 300px;
         margin: 50% 0 0 50%;
@@ -37,7 +75,7 @@ h1, h2, h3, h4, h5, h6 {
             margin-top: 50%;
         }
         &:last-child {
-            margin-bottom: 150px;
+            margin-bottom: 50%;
         }
     }
 

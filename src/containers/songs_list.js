@@ -17,8 +17,9 @@ class SongsList extends Component {
         const id = data.id;
 
         return (
-            <SongDetails id={id}
-                img={data.album.images[1].url}
+            <SongDetails key={id}
+                id={id}
+                img={data.album.images[0].url}
                 trackName={data.name}
                 url={data.preview_url}
                 artists={data.artists} />
