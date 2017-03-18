@@ -13,10 +13,10 @@
     "start": "npm-run-all --parallel open:src lint:watch",
     "open:src": "babel-node tools/srcServer.js",
     "open:dist": "babel-node tools/distServer.js",
-    "lint": "esw webpack.config.* src tools --color",
+    "lint": "node_modules/.bin/esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch",
     "clean-dist": "npm run remove-dist && mkdir dist",
-    "remove-dist": "rimraf ./dist",
+    "remove-dist": "node_modules/.bin/rimraf ./dist",
     "prebuild": "npm run clean-dist && npm run lint && npm run test",
     "build": "babel-node tools/build.js && npm run open:dist",
     "test": "jest",
@@ -31,6 +31,8 @@
   "license": "MIT",
   "dependencies": {
     "axios": "0.15.3",
+    "color": "1.0.3",
+    "json-loader": "0.5.4",
     "jsonp": "0.2.1",
     "object-assign": "4.1.0",
     "react": "15.4.1",
@@ -42,7 +44,8 @@
     "react-sound": "0.5.2",
     "redux": "3.6.0",
     "redux-form": "6.5.0",
-    "redux-thunk": "2.1.0"
+    "redux-thunk": "2.1.0",
+    "rgbaster.js": "1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "6.5.4",

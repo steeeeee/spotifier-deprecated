@@ -8,8 +8,6 @@ import App from './components/app';
 import './styles/styles.scss';
 
 const store = configureStore();
-console.log(store.getState())
-
 
 ReactDOM.render(
     <Provider store={store}>

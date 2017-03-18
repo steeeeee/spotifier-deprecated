@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Sound from 'react-sound';
+import RGBaster from '../../node_modules/rgbaster.js/rgbaster';
+import { changeColor } from '../actions/index';
+
 
 class SongDetails extends Component {
     constructor(props) {
@@ -16,6 +20,17 @@ class SongDetails extends Component {
     }
 
     onHover() {
+        const cc = this.props.changeColor;
+        const image = this.imageToParse;
+
+        RGBaster.colors(image, {
+            paletteSize: 30,
+            exclude: ['rgb(0,0,0)', 'rgb(255,255,255)'],
+            success: function(payload){
+                cc(payload.dominant);
+            }
+        });
+
         this.setState({
             hovering: true,
             playStatus: 'PLAYING'
@@ -53,14 +68,25 @@ class SongDetails extends Component {
     }
 
     render() {
+        if (!this.props.url) {
+            return <div>Loading...</div>;
+        }
         return (
             <div>
                 <img
+                    ref={(image) => { this.imageToParse = image; }}
                     onMouseOver={this.onHover}
                     onMouseLeave={this.onOut}
-                    src={this.props.img}/>
-                <div className={this.state.hovering ? 'info active' : 'info'}><h3>{this.props.trackName}</h3></div>
-                <div className={this.state.hovering ? 'info active' : 'info'}><h6>{this.props.artists.map( artist => {return artist.name;})}</h6></div>
+                    src={this.props.img}
+                    style={this.state.hovering ? {boxShadow: `0px 18px 59px 1px ${this.props.color.shadow}`} :  {boxShadow: `0px 4px 11px 0px ${this.props.color.shadow}`}}
+                    />
+                <div className={this.state.hovering ? 'info active' : 'info'}>
+                    <h3 style={this.props.color ? {backgroundColor: this.props.color.darker} : ''}>{this.props.trackName}</h3>
+                </div>
+                <div className={this.state.hovering ? 'info active' : 'info'}>
+                    <h6 style={this.props.color ? {backgroundColor: this.props.color.darker} : ''}>
+                        {this.props.artists.map( artist => {return artist.name;})}</h6>
+                </div>
                 <Sound
                     url={this.props.url}
                     playStatus={this.state.playStatus}
@@ -71,4 +97,8 @@ class SongDetails extends Component {
 
 }
 
-export default SongDetails;
+function mapStateToProps(state) {
+    return { color: state.color };
+}
+
+export default connect(mapStateToProps, { changeColor })(SongDetails);

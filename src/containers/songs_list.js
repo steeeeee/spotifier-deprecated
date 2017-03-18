@@ -31,13 +31,18 @@ class SongsList extends Component {
             return <div>Loading...</div>;
         }
         return (
-            <div className="horizontal-scroll-wrapper">{this.props.songs.tracks.items.map(this.renderSong)}</div>
+            <div
+                style={this.props.color ? {backgroundColor: this.props.color.dominant} : ''}
+                className="horizontal-scroll-wrapper">{this.props.songs.tracks.items.map(this.renderSong)}</div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return { songs: state.songs };
+    return {
+        songs: state.songs,
+        color: state.color
+    };
 }
 
 

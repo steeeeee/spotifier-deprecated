@@ -28,10 +28,12 @@ h1, h2, h3, h4, h5, h6 {
     transform: rotate(-90deg) translateY(-103vh);
     transform-origin: right top;
 
+    transition: background-color .8s ease-in;
+
     .info {
         display: block;
         opacity: 0;
-        transition: all .2s ease-in-out;
+        transition: all 1s ease-in-out;
 
         &.active {
             opacity: 1;
@@ -46,6 +48,7 @@ h1, h2, h3, h4, h5, h6 {
         padding: 2px 6px 2px;
         text-transform: uppercase;
         letter-spacing: .13em;
+        transition: background-color .8s ease-in;
     }
 
     h3 {
