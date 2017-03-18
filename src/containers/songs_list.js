@@ -4,21 +4,24 @@ import { connect } from 'react-redux';
 // Action
 import { fetchSongs } from '../actions/index';
 
+// Components
+import SongDetails from './song_details';
+
 class SongsList extends Component {
     componentWillMount() {
         this.props.fetchSongs();
     }
 
     renderSong(item) {
-        const albumImg = item.track.album.images[1].url
+        const data = item.track;
+        const id = data.id;
 
         return (
-            <div key={item.track.id}>
-                <img src={albumImg} alt=""/>
-                <h3>{item.track.name}</h3>
-                <h6>{item.track.artists.map( artist => {return artist.name})}</h6>
-                <audio src={item.track.preview_url} controls></audio>
-            </div>
+            <SongDetails id={id}
+                img={data.album.images[1].url}
+                trackName={data.name}
+                url={data.preview_url}
+                artists={data.artists} />
         );
     }
 

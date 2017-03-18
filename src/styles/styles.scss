@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
 html, body {
     margin: 0;
     box-sizing: border-box;
     height: 100vh;
     width: 100vw;
+    font-family: Rubik, sans-serif;
+    display: flex;
     overflow-y: hidden;
 }
 
@@ -21,14 +25,20 @@ h1, h2, h3, h4, h5, h6 {
     transform: rotate(-90deg) translateY(-100vh);
     transform-origin: right top;
 
-    text-align: center;
 
-    div {
+    & > div {
         background-color: chartreuse;
         height: 300px;
         width: 300px;
-        margin: 150px 0 0 50%;
+        margin: 50% 0 0 50%;
         transform: rotate(90deg) translateY(150px);
+
+        &:first-child {
+            margin-top: 50%;
+        }
+        &:last-child {
+            margin-bottom: 150px;
+        }
     }
 
 }
