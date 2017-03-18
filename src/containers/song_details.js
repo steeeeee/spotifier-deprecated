@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Sound from 'react-sound';
+import VisibilitySensor from 'react-visibility-sensor';
 import RGBaster from '../../node_modules/rgbaster.js/rgbaster';
+
+// Actions
 import { changeColor } from '../actions/index';
 
 
@@ -10,6 +14,7 @@ class SongDetails extends Component {
         super(props);
 
         this.state = {
+            visible: false,
             hovering: false,
             playStatus: 'STOPPED',
             volume: 0
@@ -17,6 +22,7 @@ class SongDetails extends Component {
 
         this.onHover = this.onHover.bind(this);
         this.onOut = this.onOut.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     onHover() {
@@ -24,7 +30,7 @@ class SongDetails extends Component {
         const image = this.imageToParse;
 
         RGBaster.colors(image, {
-            paletteSize: 30,
+            paletteSize: 50,
             exclude: ['rgb(0,0,0)', 'rgb(255,255,255)'],
             success: function(payload){
                 cc(payload.dominant);
@@ -67,11 +73,22 @@ class SongDetails extends Component {
         });
     }
 
+    onChange(isVisible) {
+        this.setState({
+            visible: (isVisible ? true : false),
+            msg: 'Element is now ' + (isVisible ? 'visible' : 'hidden')
+        });
+    }
+
     render() {
         if (!this.props.url) {
             return <div>Loading...</div>;
         }
         return (
+            <VisibilitySensor
+                onChange={this.onChange}
+                partialVisibility
+                scrollCheck>
             <div>
                 <img
                     ref={(image) => { this.imageToParse = image; }}
@@ -85,13 +102,16 @@ class SongDetails extends Component {
                 </div>
                 <div className={this.state.hovering ? 'info active' : 'info'}>
                     <h6 style={this.props.color ? {backgroundColor: this.props.color.darker} : ''}>
-                        {this.props.artists.map( artist => {return artist.name;})}</h6>
+                        {this.props.artists.map(artist => artist.name)}</h6>
                 </div>
-                <Sound
+                <h5>{this.state.msg}</h5>
+                { this.state.visible ? <Sound
                     url={this.props.url}
                     playStatus={this.state.playStatus}
-                    volume={this.state.volume} />
+                    volume={this.state.volume} /> : '' }
+
             </div>
+            </VisibilitySensor>
         );
     }
 
