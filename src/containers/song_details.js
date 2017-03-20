@@ -104,7 +104,6 @@ class SongDetails extends Component {
                     <h6 style={this.props.color ? {backgroundColor: this.props.color.darker} : ''}>
                         {this.props.artists.map(artist => artist.name)}</h6>
                 </div>
-                <h5>{this.state.msg}</h5>
                 { this.state.visible ? <Sound
                     url={this.props.url}
                     playStatus={this.state.playStatus}

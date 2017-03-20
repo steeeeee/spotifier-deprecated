@@ -3,7 +3,7 @@ import SongsList from '../containers/songs_list';
 
 const App = () => {
     return (
-        <div>
+        <div className="parent-wrapper">
             <SongsList />
         </div>
     );
